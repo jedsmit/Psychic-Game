@@ -2,55 +2,54 @@
 
 var wins = 0;
 var losses = 0;
-var guessesLeft = 10;
+var guessesLeft = 5;
 var guessesSoFar = "";
+var secretLetter = "";
+var userGuess = "";
 
 
-//generate a random letter
+//letter array
 
 var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-secretLetter = letters[Math.floor((Math.random() * 20) + 7)];
+//generates a secret letter
 
-function compare(userGuess, secretLetter) {
-    if (userGuess === secretLetter) {
-        wins = wins++;
-        guessesLeft = 10;
-        guessesSoFar = "";
-    } else if (userGuess != secretLetter) {
-        guessesLeft = guessesLeft--;
-
-        if (guessesLeft > 0) {
-            guessesSoFar = guessesSoFar + userGuess;
-        } else {
-            losses = losses--;
-        };
-    }
+function generateLetter(array) {
+    return array[Math.floor(Math.random() * array.length)];
 };
 
+//----------------main game------------------------------------------
 
-console.log(secretLetter);
+
+secretLetter = generateLetter(letters);
+console.log("secret: " + secretLetter);
 
 //get user's guess
+//runs 5 times
+//compare it to the secret letter
+// if true, increment wins, reset guesses left, so far, secret letter, and user guess
+// if false, decrement guesses left, add users guess to guesses so far 
+for (i = 0; i < 6; i++) {
 
-document.onkeyup = function (event) {
-
-    var userGuess = event.key.toLowerCase();
-
-    console.log(userGuess);
-}
-//compare guesses and increment variables accordingly
-
-
-
-
-console.log(wins);
-console.log(losses);
-console.log(guessesLeft);
-console.log(guessesSoFar);
+    document.onkeyup = function (event) {
+        userGuess = event.key.toLowerCase();
+        console.log("user: " + userGuess);
 
 
+        if (userGuess === secretLetter) {
+            wins++;
+            guessesLeft = 5;
+            guessesSoFar = "";
+            secretLetter = "";
+        } else {
+            guessesLeft--;
+            guessesSoFar = guessesSoFar + " " + userGuess;
+            console.log(guessesSoFar);
+        };
 
-//compare user's guess with random letter
-//allow 10 guesses that decrease with each wrong guess
-//print letters guessed to the screen 
+        document.getElementById("wins").innerHTML = ("Wins: " + wins);
+        document.getElementById("losses").innerHTML = ("Losses: " + losses);
+        document.getElementById("guesses-left").innerHTML = ("Guesses left: " + guessesLeft);
+        document.getElementById("guesses-so-far").innerHTML = ("Guesses so far: " + guessesSoFar);
+    };
+};
