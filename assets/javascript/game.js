@@ -2,7 +2,7 @@
 
 var wins = 0;
 var losses = 0;
-var guessesLeft = 5;
+var guessesLeft = 7;
 var guessesSoFar = "";
 var secretLetter = "";
 var userGuess = "";
@@ -28,6 +28,7 @@ function updateStats() {
 };
 //----------------main game function start------------------------------------------
 function game() {
+    updateStats();
     //get secret letter
     secretLetter = generateLetter(letters);
     console.log("secret: " + secretLetter);
@@ -43,7 +44,7 @@ function game() {
             updateStats();
             //if not correct *and* no guesses left: increment losses, reset guesses, update stats,     //restart game         
             if (guessesLeft === 0) {
-                guessesLeft = 5;
+                guessesLeft = 7;
                 guessesSoFar = "";
                 secretLetter = "";
                 losses++;
@@ -53,7 +54,7 @@ function game() {
             //if correct: increment wins, reset guesses, update stats, restart game            
         } else {
             wins++;
-            guessesLeft = 5;
+            guessesLeft = 7;
             guessesSoFar = "";
             secretLetter = "";
             updateStats();
